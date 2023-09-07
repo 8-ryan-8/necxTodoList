@@ -13,6 +13,7 @@ export default function Login() {
           Password
           <input type="password" name="password" placeholder="Password" required />
         </label>
+        <br />
         <button type="submit">Login</button>
       </form>
     </div>
