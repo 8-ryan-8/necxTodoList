@@ -11,14 +11,19 @@ dotenv.config();
 const PORT = process.env.PORT || 8000;
 const app = express();
 
-// middleware
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(cookieParser());
 
-// routes
 app.use('/api', allRoutes);
+
+// eslint-disable-next-line
+app.use((err, req, res, next) => {
+  const status = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  return res.status(status).json({ message, stack: err.stack });
+});
 
 const connectDB = async () => {
   try {

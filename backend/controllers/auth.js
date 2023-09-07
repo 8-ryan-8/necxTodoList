@@ -1,10 +1,11 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import createError from '../utils/createError.js';
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   if (!req.body.name || !req.body.email || !req.body.password) {
-    return res.json('required field name, email, password');
+    return next(createError({ status: 400, message: 'Name, email, password is required' }));
   }
 
   try {
@@ -21,13 +22,13 @@ export const register = async (req, res) => {
     return res.status(201).json('New user Created');
   } catch (err) {
     console.log(err);
-    return res.json('server error');
+    return next(err);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    return res.json('required field name, password');
+    return next(createError({ status: 400, message: 'Name, email is required' }));
   }
 
   try {
@@ -36,12 +37,12 @@ export const login = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).json('no user found');
+      return next(createError({ status: 404, message: 'No user found' }));
     }
 
     const isPasswordCorrect = await bcryptjs.compare(req.body.password, user.password);
     if (!isPasswordCorrect) {
-      return res.json('password incorrect');
+      return next(createError({ status: 400, message: 'Password is incorrect' }));
     }
 
     const payload = {
@@ -58,6 +59,24 @@ export const login = async (req, res) => {
       .json({ message: 'login success' });
   } catch (err) {
     console.log(err);
-    return res.json('server error');
+    return next(err);
   }
+};
+
+export const logout = (req, res) => {
+  res.clearCookie('access_token');
+  return res.status(200).json({ message: 'Logout Success' });
+};
+
+export const isLoggedIn = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.json(false);
+  }
+  return jwt.verify(token, process.env.JWT_SECRET, (err) => {
+    if (err) {
+      return res.json(false);
+    }
+    return res.json(true);
+  });
 };
