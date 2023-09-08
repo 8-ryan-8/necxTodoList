@@ -36,26 +36,26 @@ export default function Navbar() {
   if (!user) return null;
 
   return (
-    <div>
+    <div className="navbar">
       <header>
-        <div>
+        <div className="user-info">
           <FaUserAlt />
-          <div>
-            <h1>
+          <div className="user-details">
+            <h1 className="username">
               username:
               {' '}
               {user.name}
             </h1>
-            <h1>
+            <h2 className="email">
               email:
               {' '}
-              {user?.email}
-            </h1>
-            <Link to="/edit-profile">Edit</Link>
+              {user.email}
+            </h2>
+            <Link to="/edit-profile" className="edit-link">Edit</Link>
           </div>
         </div>
         <nav>
-          <button type="button" onClick={handleLogout}>logout</button>
+          <button type="button" onClick={handleLogout} className="logout-button">Logout</button>
         </nav>
       </header>
     </div>
