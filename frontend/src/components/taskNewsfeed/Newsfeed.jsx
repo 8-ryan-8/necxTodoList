@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/TaskList.css';
+import '../../styles/Newsfeed.css';
 import axios from 'axios';
 import NewsfeedItem from './NewsfeedItem';
 
-export default function TaskList() {
+export default function Newsfeed() {
   const [taskList, setTaskList] = useState([]);
 
   const getAllTasks = async () => {
@@ -25,6 +25,13 @@ export default function TaskList() {
     <div className="task-list">
       {taskList.length > 0 ? (
         <table className="task-table">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Title</th>
+              <th>Status</th>
+            </tr>
+          </thead>
           <tbody>
             {taskList.map((task) => (
               <NewsfeedItem key={task._id} task={task} />

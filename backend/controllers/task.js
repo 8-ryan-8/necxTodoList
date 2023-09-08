@@ -1,4 +1,5 @@
 import Task from '../models/Task.js';
+import User from '../models/User.js';
 import createError from '../utils/createError.js';
 
 export const createTask = async (req, res, next) => {
@@ -18,7 +19,16 @@ export const createTask = async (req, res, next) => {
 export const getAllTasks = async (req, res, next) => {
   try {
     const tasks = await Task.find({});
-    return res.status(200).json(tasks);
+    const output = [];
+    for (const task of tasks) {
+      // console.log("task", task);
+      const copyTaskObj = {...task};
+      const userId = task.user;
+      const user = await User.findById(userId);
+      copyTaskObj.userName = user.name;
+      output.push(copyTaskObj);
+    }
+    return res.status(200).json(output);
   } catch (err) {
     return next(err);
   }

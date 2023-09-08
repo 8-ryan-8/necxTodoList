@@ -71,6 +71,13 @@ export default function TaskList() {
       )}
       {taskList.length > 0 ? (
         <table className="task-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Status</th>
+              <th> </th>
+            </tr>
+          </thead>
           <tbody>
             {taskList.map((task) => (
               <TaskItem key={task._id} task={task} deleteTask={deleteTask} />
