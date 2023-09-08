@@ -1,0 +1,12 @@
+.heading-container {
+	text-align: center;
+}
+
+.page-heading {
+	font-size: 36px;
+	color: darkblue;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	margin-bottom: 10px;
+	font-family: 'Helvetica Neue', sans-serif;
+}

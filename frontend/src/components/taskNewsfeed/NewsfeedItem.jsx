@@ -3,6 +3,8 @@ import axios from 'axios';
 import '../../styles/NewsfeedItem.css';
 
 export default function TaskItem({ task }) {
+  console.log(task);
+
   return (
     <tr className="task-item">
       <td>{task.userName}</td>

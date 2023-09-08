@@ -5,12 +5,14 @@ import NewsfeedItem from './NewsfeedItem';
 
 export default function Newsfeed() {
   const [taskList, setTaskList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  const getAllTasks = async () => {
+  const getAllTasks = async (page) => {
     try {
-      const { data } = await axios.get('/api/tasks/all');
+      const { data } = await axios.get(`/api/tasks/all?page=${page}&pageSize=${pageSize}`);
       setTaskList(
-        data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+        data.reverse(),
       );
     } catch (err) {
       console.log(err);
@@ -18,8 +20,18 @@ export default function Newsfeed() {
   };
 
   useEffect(() => {
-    getAllTasks();
-  }, []);
+    getAllTasks(currentPage);
+  }, [currentPage]);
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="task-list">
@@ -39,6 +51,12 @@ export default function Newsfeed() {
           </tbody>
         </table>
       ) : 'No tasks found'}
+      <div className="pagination-buttons">
+        <button type="button" onClick={handlePreviousPage} disabled={currentPage === 1}>
+          Previous Page
+        </button>
+        <button type="button" onClick={handleNextPage}>Next Page</button>
+      </div>
     </div>
   );
 }

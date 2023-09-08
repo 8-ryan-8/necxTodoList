@@ -18,7 +18,15 @@ export const createTask = async (req, res, next) => {
 
 export const getAllTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find({});
+    const { page, pageSize } = req.query;
+
+    const currentPage = parseInt(page, 10) || 1;
+    const tasksPerPage = parseInt(pageSize, 10) || 10;
+
+    const skip = (currentPage - 1) * tasksPerPage;
+
+    const tasks = await Task.find({}).skip(skip).limit(tasksPerPage);
+
     const output = [];
     for (const task of tasks) {
       // console.log("task", task);
