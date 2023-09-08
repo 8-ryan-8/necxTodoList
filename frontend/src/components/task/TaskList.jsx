@@ -9,7 +9,7 @@ export default function TaskList() {
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [newTask, setNewTask] = useState('');
   const todoMaxLength = 60;
-  const todoMinLength = 10;
+  const todoMinLength = 5;
 
   function isWhitespace(str) {
     return /^\s*$/.test(str);
@@ -25,7 +25,7 @@ export default function TaskList() {
     try {
       // checks todo length
       if (newTask.length > todoMaxLength || newTask.length < todoMinLength) {
-        toast.error('Todo must be between 10 and 60 characters');
+        toast.error(`Todo must be between ${todoMinLength} and ${todoMaxLength} characters`);
         return;
       }
 

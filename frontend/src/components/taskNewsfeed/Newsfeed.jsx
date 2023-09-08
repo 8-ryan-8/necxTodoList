@@ -55,7 +55,7 @@ export default function Newsfeed() {
         <button type="button" onClick={handlePreviousPage} disabled={currentPage === 1}>
           Previous Page
         </button>
-        <button type="button" onClick={handleNextPage}>Next Page</button>
+        <button type="button" onClick={handleNextPage} disabled={taskList.length === 0}>Next Page</button>
       </div>
     </div>
   );
