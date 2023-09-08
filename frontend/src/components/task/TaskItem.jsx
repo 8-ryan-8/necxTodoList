@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import './TaskItem.css';
+import '../../styles/TaskItem.css';
 
 export default function TaskItem({ task, deleteTask }) {
   const [isCompleted, setIsCompleted] = useState(task.completed);

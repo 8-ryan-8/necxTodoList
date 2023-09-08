@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import './Navbar.css';
-import { Link, useNavigate } from 'react-router-dom';
+import '../../styles/Navbar.css';
+import { useNavigate } from 'react-router-dom';
 import { FaUserAlt } from 'react-icons/fa';
 
 export default function Navbar() {
@@ -33,6 +33,14 @@ export default function Navbar() {
     }
   };
 
+  const goToNewsFeed = () => {
+    navigate('/TaskNewsfeed');
+  };
+
+  const goHome = () => {
+    navigate('/');
+  };
+
   if (!user) return null;
 
   return (
@@ -51,11 +59,12 @@ export default function Navbar() {
               {' '}
               {user.email}
             </h2>
-            <Link to="/edit-profile" className="edit-link">Edit</Link>
           </div>
         </div>
-        <nav>
-          <button type="button" onClick={handleLogout} className="logout-button">Logout</button>
+        <nav className="nav-buttons">
+          <button type="button" onClick={goHome} className="nav-button">Home</button>
+          <button type="button" onClick={goToNewsFeed} className="nav-button">Task Newsfeed</button>
+          <button type="button" onClick={handleLogout} className="nav-button">Logout</button>
         </nav>
       </header>
     </div>

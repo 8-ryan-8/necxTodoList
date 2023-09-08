@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './TaskList.css';
+import '../../styles/TaskList.css';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import TaskItem from './TaskItem';

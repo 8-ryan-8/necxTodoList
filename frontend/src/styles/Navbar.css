@@ -38,14 +38,13 @@ header {
 	color: #666;
 }
 
-.edit-link {
-	color: #007aff;
-	text-decoration: none;
-	font-weight: bold;
-	margin-top: 5px;
+.nav-buttons {
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
-.logout-button {
+.nav-button {
 	background-color: transparent;
 	color: #007aff;
 	border: none;
@@ -54,6 +53,6 @@ header {
 	padding: 0;
 }
 
-.logout-button:hover {
+.nav-button:hover {
 	text-decoration: underline;
 }
