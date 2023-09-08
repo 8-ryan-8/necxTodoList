@@ -25,11 +25,13 @@ export const getAllTasks = async (req, res, next) => {
 
     const skip = (currentPage - 1) * tasksPerPage;
 
-    const tasks = await Task.find({}).skip(skip).limit(tasksPerPage);
+    const tasks = await Task.find({})
+    .sort({ _id: -1 }) // Sort by _id in descending order (newer tasks first)
+    .skip(skip)
+    .limit(tasksPerPage);
 
     const output = [];
     for (const task of tasks) {
-      // console.log("task", task);
       const copyTaskObj = {...task};
       const userId = task.user;
       const user = await User.findById(userId);
@@ -45,7 +47,8 @@ export const getAllTasks = async (req, res, next) => {
 export const getCurrentUserTasks = async (req, res, next) => {
   try {
     const tasks = await Task.find({ user: req.user.id });
-    return res.status(200).json(tasks);
+    const sortedTasks = tasks.reverse();
+    return res.status(200).json(sortedTasks);
   } catch (err) {
     return next(err);
   }

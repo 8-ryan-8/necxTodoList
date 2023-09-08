@@ -11,9 +11,7 @@ export default function Newsfeed() {
   const getAllTasks = async (page) => {
     try {
       const { data } = await axios.get(`/api/tasks/all?page=${page}&pageSize=${pageSize}`);
-      setTaskList(
-        data.reverse(),
-      );
+      setTaskList(data);
     } catch (err) {
       console.log(err);
     }
@@ -32,6 +30,8 @@ export default function Newsfeed() {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  console.log('currentPage:', currentPage);
 
   return (
     <div className="task-list">
