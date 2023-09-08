@@ -1,0 +1,31 @@
+.task-item {
+	border-bottom: 1px solid #ccc;
+}
+
+.task-item-checkbox {
+	display: flex;
+	align-items: center;
+}
+
+.task-item-checkbox input[type='checkbox'] {
+	margin-right: 10px;
+}
+
+.task-item-status {
+	font-weight: bold;
+	text-transform: capitalize;
+}
+
+.delete-button {
+	background-color: #ff5252;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.delete-button:hover {
+	background-color: #ff0000;
+}
