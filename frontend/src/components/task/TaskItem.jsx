@@ -1,18 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 import './TaskItem.css';
 
 export default function TaskItem({ task, deleteTask }) {
-  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+  const [isCompleted, setIsCompleted] = useState(task.completed);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setIsCompleted(task.isCompleted);
-  }, []);
+  const handleCheckedboxClick = async () => {
+    try {
+      setIsLoading(true);
+      await axios.put(`/api/tasks/${task._id}`, {
+        completed: !isCompleted,
+      });
+      setIsCompleted(!isCompleted);
+      toast.success('Task Updated Successfully');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <tr className="task-item">
       <td className="task-item-checkbox">
-        <div>
-          <input type="checkbox" checked={isCompleted} tabIndex={-1} readOnly />
+        <div role="checkbox" aria-checked onChange={handleCheckedboxClick} disabled={isLoading}>
+          <input type="checkbox" checked={isCompleted} tabIndex={-1} readOnly disabled={isLoading} />
         </div>
         <p>{task.title}</p>
       </td>

@@ -6,6 +6,28 @@ import TaskItem from './TaskItem';
 
 export default function TaskList() {
   const [taskList, setTaskList] = useState([]);
+  const [isAddingNew, setIsAddingNew] = useState(false);
+  const [newTask, setNewTask] = useState('');
+
+  const addNewTask = async (e) => {
+    e.preventDefault();
+    if (newTask.length <= 0) {
+      toast.error('Task is empty');
+      return;
+    }
+
+    try {
+      const { data } = await axios.post('/api/tasks', {
+        title: newTask,
+      });
+      toast.success('New Task Created');
+      setTaskList([{ ...data }, ...taskList]);
+      setNewTask('');
+      setIsAddingNew(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getTasks = async () => {
     try {
@@ -16,6 +38,10 @@ export default function TaskList() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const addNewButtonClick = () => {
+    setIsAddingNew(!isAddingNew);
   };
 
   useEffect(() => {
@@ -35,8 +61,14 @@ export default function TaskList() {
   return (
     <div className="task-list">
       <div className="task-list-header">
-        <button type="button" className="add-button">Add new</button>
+        <button type="button" className="add-button" onClick={addNewButtonClick}>Add new</button>
       </div>
+      {isAddingNew && (
+        <form onSubmit={addNewTask}>
+          <input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Task Name" />
+          <button type="submit">Add</button>
+        </form>
+      )}
       {taskList.length > 0 ? (
         <table className="task-table">
           <tbody>
