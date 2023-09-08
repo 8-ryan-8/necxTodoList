@@ -8,6 +8,12 @@ export default function TaskList() {
   const [taskList, setTaskList] = useState([]);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [newTask, setNewTask] = useState('');
+  const todoMaxLength = 60;
+  const todoMinLength = 10;
+
+  function isWhitespace(str) {
+    return /^\s*$/.test(str);
+  }
 
   const addNewTask = async (e) => {
     e.preventDefault();
@@ -17,6 +23,19 @@ export default function TaskList() {
     }
 
     try {
+      // checks todo length
+      if (newTask.length > todoMaxLength || newTask.length < todoMinLength) {
+        toast.error('Todo must be between 10 and 60 characters');
+        return;
+      }
+
+      // checks if only white space
+      if (isWhitespace(newTask)) {
+        console.log('is Whitespace');
+        toast.error('Todo must contain non-whitespace');
+        return;
+      }
+
       const { data } = await axios.post('/api/tasks', {
         title: newTask,
       });
