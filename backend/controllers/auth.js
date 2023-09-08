@@ -68,7 +68,7 @@ export const logout = (req, res) => {
   return res.status(200).json({ message: 'Logout Success' });
 };
 
-export const isLoggedIn = (req, res) => {
+export const isLoggedIn = async (req, res) => {
   const token = req.cookies.access_token;
   if (!token) {
     return res.json(false);
