@@ -56,3 +56,9 @@ header {
 .nav-button:hover {
 	text-decoration: underline;
 }
+
+.user-icon {
+	font-size: 24px;
+	color: #007bff;
+	margin-right: 10px;
+}

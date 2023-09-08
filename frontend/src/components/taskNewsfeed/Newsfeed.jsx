@@ -31,8 +31,6 @@ export default function Newsfeed() {
     }
   };
 
-  console.log('currentPage:', currentPage);
-
   return (
     <div className="task-list">
       {taskList.length > 0 ? (

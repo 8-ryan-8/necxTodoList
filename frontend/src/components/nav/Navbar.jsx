@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import '../../styles/Navbar.css';
 import { useNavigate } from 'react-router-dom';
-import { FaUserAlt } from 'react-icons/fa';
+import { ImProfile } from 'react-icons/im';
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
@@ -47,7 +47,7 @@ export default function Navbar() {
     <div className="navbar">
       <header>
         <div className="user-info">
-          <FaUserAlt />
+          <ImProfile className="user-icon" />
           <div className="user-details">
             <h1 className="username">
               username:
